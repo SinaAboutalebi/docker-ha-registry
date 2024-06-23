@@ -1,0 +1,38 @@
+version: 0.1
+log:
+  accesslog:
+    disabled: true
+  level: info
+  formatter: json
+  fields:
+    service: registry
+    environment: staging
+
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+  maintenance:
+    readonly:
+      enabled: true
+  cache:
+    blobdescriptor: inmemory
+  delete:
+    enabled: true
+
+http:
+  addr: 0.0.0.0:5000
+  net: tcp
+  debug:
+    addr: 0.0.0.0:5001
+    prometheus:
+      enabled: true
+      path: /metrics
+
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+
+proxy:
+  remoteurl: https://docker.arvancloud.ir

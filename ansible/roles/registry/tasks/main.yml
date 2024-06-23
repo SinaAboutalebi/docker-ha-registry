@@ -1,0 +1,21 @@
+- name: Copy Registry config file to hosts
+  copy:
+    src: "{{ registry_config_src }}"
+    dest: "{{ registry_config_dest }}"
+  tags: copy_config
+
+- name: Deploy Registry Container
+  docker_container:
+    name: "{{ registry_container_name }}"
+    image: "{{ registry_image }}"
+    volumes:
+      - "{{ registry_config_dest }}:/etc/docker/registry/config.yml"
+      - "{{ registry_data_dest }}:/var/lib/registry"
+    networks:
+      - name: "{{ registry_network_name }}"
+  tags: deploy_registry
+
+- name: Set registry container IP
+  set_fact:
+    local_registry_ip: "{{ local_registry_ip }}"
+  tags: set_fact_registry

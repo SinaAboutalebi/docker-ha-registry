@@ -1,0 +1,25 @@
+- hosts: nodes
+  become: true
+  vars:
+    registry_network_name: registry-network
+    registry_subnet: 172.23.8.0/24
+    registry_gateway: 172.23.8.1
+    registry_iprange: 172.23.8.0/24
+    registry_container_name: registry
+    registry_image: registry:2
+    registry_config_src: config.yml
+    registry_config_dest: /opt/volumes/registry/config/config.yml
+    registry_data_dest: /opt/volumes/registry/data/
+    local_registry_ip: 172.23.8.2
+    nginx_container_name: nginx
+    nginx_image: nginx:latest
+    nginx_config_src: nginx.conf.j2
+    nginx_config_dest: /opt/volumes/loadbalancer/config/nginx.conf
+    nginx_host_port: 80
+    nginx_container_port: 80
+    domain: mastkhiar.xyz
+
+  roles:
+    - common
+    - registry
+    - loadbalancer

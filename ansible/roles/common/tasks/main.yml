@@ -1,0 +1,19 @@
+- name: Create docker volumes directory in hosts
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - /opt/volumes/registry/config/
+    - /opt/volumes/registry/data/
+    - /opt/volumes/loadbalancer/config/
+  tags: create_directories
+
+- name: Create internal Network
+  docker_network:
+    name: "{{ registry_network_name }}"
+    ipam_config:
+      - subnet: "{{ registry_subnet }}"
+        gateway: "{{ registry_gateway }}"
+        iprange: "{{ registry_iprange }}"
+  tags: create_network

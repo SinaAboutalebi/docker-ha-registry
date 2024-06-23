@@ -1,0 +1,42 @@
+- name: Gather list of all nodes
+  set_fact:
+    all_nodes: "{{ groups['nodes'] | map('extract', hostvars, ['ansible_host']) | list }}"
+  tags: gather_nodes
+
+- name: Filter out the current load balancer
+  set_fact:
+    backup_nodes_ips: "{{ all_nodes | difference([ansible_host]) }}"
+  tags: filter_nodes
+
+- name: Set Loadbalancer host port
+  set_fact:
+    nginx_host_port: "{{ nginx_host_port }}"
+  tags: lb_host_port
+
+- name: Set nodes hostname
+  set_fact:
+    node_hostname: "{{ hostvars[inventory_hostname].hostname }}"
+  tags: set_node_hostname
+
+- name: Set Domain
+  set_fact:
+    lb_domain: "{{ domain }}"
+
+- name: Template the NGINX config
+  template:
+    src: "{{ nginx_config_src }}"
+    dest: "{{ nginx_config_dest }}"
+  tags: template_nginx
+
+- name: Deploy NGINX Loadbalancer container
+  docker_container:
+    name: "{{ nginx_container_name }}"
+    image: "{{ nginx_image }}"
+    state: started
+    volumes:
+      - "{{ nginx_config_dest }}:/etc/nginx/nginx.conf:ro"
+    published_ports:
+      - "{{ nginx_host_port }}:{{ nginx_container_port }}"
+    networks:
+      - name: "{{ registry_network_name }}"
+  tags: deploy_nginx

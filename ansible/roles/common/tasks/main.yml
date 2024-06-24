@@ -1,3 +1,14 @@
+- name: Check if Docker is installed
+  command: docker --version
+  register: docker_version
+  ignore_errors: true
+
+- name: Install Docker if not already installed
+  apt:
+    name: docker.io
+    state: present
+  when: docker_version.rc != 0
+
 - name: Create docker volumes directory in hosts
   file:
     path: "{{ item }}"

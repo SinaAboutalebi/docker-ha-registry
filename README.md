@@ -19,7 +19,7 @@ to pull an image:
 
 1. Clone the repository:
     ```BASH
-    git clone https://github.com/SinaAboutalebi/docker-ha-registry
+    git clone --depth 1 https://github.com/SinaAboutalebi/docker-ha-registry
     cd docker-ha-registry/ansible
     ```
     
@@ -50,10 +50,12 @@ The `deploy.yml` playbook is the main playbook used to run this project. Here is
     local_registry_ip: 172.23.8.2
     nginx_container_name: nginx
     nginx_image: nginx:latest
-    nginx_config_src: nginx.conf.j2
+    nginx_config_src: nginxsinglenode.conf.j2
     nginx_config_dest: /opt/volumes/loadbalancer/config/nginx.conf
-    nginx_host_port: 80
-    nginx_container_port: 80
+    nginx_http_host_port: 80
+    nginx_http_container_port: 80
+    nginx_https_host_port: 443
+    nginx_https_container_port: 443
     domain: mastkhiar.xyz
 
   roles:

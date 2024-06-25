@@ -45,8 +45,10 @@ registry_url="registry.mastkhiar.xyz"
 
 if [ "$#" -gt 0 ]; then
     images=("$@")
+     echo "[🚀] Pulling custom images"
 else
     images=("${default_images[@]}")
+    echo "[📥] Pulling default images"
 fi
 
 for image in "${images[@]}"; do

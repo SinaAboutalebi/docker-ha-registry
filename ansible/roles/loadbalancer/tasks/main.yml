@@ -36,7 +36,8 @@
     volumes:
       - "{{ nginx_config_dest }}:/etc/nginx/nginx.conf:ro"
     published_ports:
-      - "{{ nginx_host_port }}:{{ nginx_container_port }}"
+      - "{{ nginx_http_host_port }}:{{ nginx_http_container_port }}"
+      - "{{ nginx_https_host_port }}:{{ nginx_https_container_port }}"
     networks:
       - name: "{{ registry_network_name }}"
   tags: deploy_nginx

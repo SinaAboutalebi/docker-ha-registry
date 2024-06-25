@@ -17,4 +17,4 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Run the script
-      run: chmod +x pull-common-images.sh && ./pull-common-images.sh
+      run: chmod +x pull-common-images.sh && ./pull-common-images.sh nginx alpine hello-world redis

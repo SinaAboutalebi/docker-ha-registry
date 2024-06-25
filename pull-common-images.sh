@@ -39,7 +39,7 @@ images=(
     "haproxy"
     "influxdb"
     "nextcloud"
-    "Memcached"
+    "memcached"
     )
 
 registry_url="registry.mastkhiar.xyz"

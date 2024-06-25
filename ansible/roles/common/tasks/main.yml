@@ -4,16 +4,37 @@
   ignore_errors: true
 
 - name: Install Docker if not already installed
-  apt:
-    name: docker.io
-    state: present
+  tasks:
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        pkg:
+          [
+            "docker-ce",
+            "docker-ce-cli",
+            "docker-buildx-plugin",
+            "docker-compose-plugin",
+            "containerd.io",
+          ]
+        state: latest
+        update_cache: true
+
   when: docker_version.rc != 0
 
 - name: Create docker volumes directory in hosts
   file:
     path: "{{ item }}"
     state: directory
-    mode: '0755'
+    mode: "0755"
   with_items:
     - /opt/volumes/registry/config/
     - /opt/volumes/registry/data/

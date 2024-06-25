@@ -1,6 +1,6 @@
 #!/bin/bash
 
-images=(
+default_images=(
     "nginx"
     "redis"
     "mysql"
@@ -19,7 +19,6 @@ images=(
     "openjdk"
     "ruby"
     "php"
-    "microsoft/dotnet"
     "ruby"
     "maven"
     "gradle"
@@ -40,9 +39,15 @@ images=(
     "influxdb"
     "nextcloud"
     "memcached"
-    )
+)
 
 registry_url="registry.mastkhiar.xyz"
+
+if [ "$#" -gt 0 ]; then
+    images=("$@")
+else
+    images=("${default_images[@]}")
+fi
 
 for image in "${images[@]}"; do
     full_image="$registry_url/$image"

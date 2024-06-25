@@ -13,7 +13,6 @@ images=(
     "prom/prometheus"
     "hashicorp/terraform"
     "jenkins/jenkins:lts"
-    "influxdb"
     "busybox"
     "ubuntu"
     "golang"
@@ -32,6 +31,15 @@ images=(
     "pytorch/pytorch"
     "jupyter/base-notebook"
     "debian"
+    "httpd"
+    "rabbitmq"
+    "traefik"
+    "hello-world"
+    "wordpress"
+    "haproxy"
+    "influxdb"
+    "nextcloud"
+    "Memcached"
     )
 
 registry_url="registry.mastkhiar.xyz"
@@ -40,6 +48,7 @@ for image in "${images[@]}"; do
     full_image="$registry_url/$image"
     echo "[⚙️] Pulling $full_image ..."
     docker pull $full_image
+    docker rmi $full_image
     if [ $? -ne 0 ]; then
         echo "[❌] Failed to pull $full_image"
     else

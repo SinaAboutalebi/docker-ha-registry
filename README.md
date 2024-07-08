@@ -5,7 +5,7 @@ This project sets up a highly available, redundant Docker registry across multip
 ### 🐳 Accessing the Registry
 to pull an image:
   ```BASH
-  docker pull registry.mastkhiar.xyz/nginx:latest
+  docker pull registry.RegistryHub.ir/nginx:latest
   ```
 
 ## 🚀 Installation and Usage
@@ -56,7 +56,7 @@ The `deploy.yml` playbook is the main playbook used to run this project. Here is
     nginx_http_container_port: 80
     nginx_https_host_port: 443
     nginx_https_container_port: 443
-    domain: mastkhiar.xyz
+    domain: registryhub.ir
 
   roles:
     - common

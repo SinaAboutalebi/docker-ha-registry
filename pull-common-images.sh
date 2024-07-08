@@ -41,7 +41,7 @@ default_images=(
     "memcached"
 )
 
-registry_url="registry.mastkhiar.xyz"
+registry_url="registry.registryhub.ir"
 
 if [ "$#" -gt 0 ]; then
     images=("$@")
